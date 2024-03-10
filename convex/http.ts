@@ -25,14 +25,14 @@ http.route({
       switch (result.type) {
         case "user.created":
           await ctx.runMutation(internal.users.createUser, {
-            tokenIdentifier: `https://${process.env.CLERK_HOSTNAME}|${result.data.id}`
+            tokenIdentifier: `${process.env.CLERK_HOSTNAME}|${result.data.id}`
           });
           break;
 
         case "organizationMembership.created":
           await ctx.runMutation(internal.users.addOrgIdToUser, {
             orgId: result.data.organization.id,
-            tokenIdentifier: `https://${process.env.CLERK_HOSTNAME}|${result.data.public_user_data.user_id}`
+            tokenIdentifier: `${process.env.CLERK_HOSTNAME}|${result.data.public_user_data.user_id}`
           });
           break;
       }
