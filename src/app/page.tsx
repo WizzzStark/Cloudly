@@ -57,6 +57,8 @@ export default function Home() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     const postUrl = await generateUploadUrl();
 
+    if(values.file === null) return;
+
     const result = await fetch(postUrl, {
       method: "POST",
       headers: { "Content-Type": values.file[0].type },
