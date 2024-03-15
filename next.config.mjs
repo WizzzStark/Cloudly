@@ -1,4 +1,12 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+    images: {
+        remotePatterns: [
+            {
+                hostname: 'youthful-frog-508.convex.cloud',
+            }
+        ],
+    }
+};
 
 export default nextConfig;
