@@ -5,47 +5,65 @@ import { httpAction } from "./_generated/server";
 
 const http = httpRouter();
 
+
 http.route({
-  path: "/clerk",
-  method: "POST",
+  path: "/getImage",
+  method: "GET",
   handler: httpAction(async (ctx, request) => {
-    const payloadString = await request.text();
-    const headerPayload = request.headers;
-
-    try {
-      const result = await ctx.runAction(internal.clerk.fulfill, {
-        payload: payloadString,
-        headers: {
-          "svix-id": headerPayload.get("svix-id")!,
-          "svix-timestamp": headerPayload.get("svix-timestamp")!,
-          "svix-signature": headerPayload.get("svix-signature")!,
-        },
-      });
-
-      switch (result.type) {
-        case "user.created":
-          await ctx.runMutation(internal.users.createUser, {
-            tokenIdentifier: `${process.env.CLERK_HOSTNAME}|${result.data.id}`
-          });
-          break;
-
-        case "organizationMembership.created":
-          await ctx.runMutation(internal.users.addOrgIdToUser, {
-            orgId: result.data.organization.id,
-            tokenIdentifier: `${process.env.CLERK_HOSTNAME}|${result.data.public_user_data.user_id}`
-          });
-          break;
-      }
-
-      return new Response(null, {
-        status: 200,
-      });
-    } catch (err) {
-      return new Response("Webhook Error", {
-        status: 400,
+    const { searchParams } = new URL(request.url);
+    const storageId = searchParams.get("storageId")!;
+    const blob = await ctx.storage.get(storageId);
+    if (blob === null) {
+      return new Response("Image not found", {
+        status: 404,
       });
     }
+    return new Response(blob);
   }),
 });
+
+http.route({
+    path: "/clerk",
+    method: "POST",
+    handler: httpAction(async (ctx, request) => {
+      const payloadString = await request.text();
+      const headerPayload = request.headers;
+
+      try {
+        const result = await ctx.runAction(internal.clerk.fulfill, {
+          payload: payloadString,
+          headers: {
+            "svix-id": headerPayload.get("svix-id")!,
+            "svix-timestamp": headerPayload.get("svix-timestamp")!,
+            "svix-signature": headerPayload.get("svix-signature")!,
+          },
+        });
+
+        switch (result.type) {
+          case "user.created":
+            await ctx.runMutation(internal.users.createUser, {
+              tokenIdentifier: `${process.env.CLERK_HOSTNAME}|${result.data.id}`
+            });
+            break;
+
+          case "organizationMembership.created":
+            await ctx.runMutation(internal.users.addOrgIdToUser, {
+              orgId: result.data.organization.id,
+              tokenIdentifier: `${process.env.CLERK_HOSTNAME}|${result.data.public_user_data.user_id}`
+            });
+            break;
+        }
+
+        return new Response(null, {
+          status: 200,
+        });
+      } catch (err) {
+        return new Response("Webhook Error", {
+          status: 400,
+        });
+      }
+    }),
+});
+
 
 export default http;

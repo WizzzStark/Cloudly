@@ -35,13 +35,12 @@ import { ReactNode, useState } from "react"
 import { useMutation } from "convex/react"
 import { api } from "../../convex/_generated/api"
 import { useToast } from "@/components/ui/use-toast"
-import Image from "next/image"
-
-
 
 
 function getFileUrl(fileId: Id<"_storage">): string {
-    return `${process.env.NEXT_PUBLIC_CONVEX_URL}/api/storage/${fileId}`;
+    const getImageUrl = new URL(`https://youthful-frog-508.convex.site/getImage`)
+    getImageUrl.searchParams.set("storageId", fileId);
+    return getImageUrl.toString();
 }
 
 function FileCardActions({ file }: { file: Doc<"files">}){
@@ -119,7 +118,7 @@ export function FileCard({ file }: { file: Doc<"files">}){
             <CardContent className="h-[200px] flex justify-center items-center">
                {
                 file.type === "image" &&
-                    <Image 
+                    <img 
                         alt={file.name}
                         width="200"
                         height="100"
