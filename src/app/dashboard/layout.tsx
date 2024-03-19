@@ -21,7 +21,7 @@ export default function DasboardLayout({
       <div className="flex gap-8">
         <SideNav />
 
-        <div>
+        <div className="w-full">
           {children}
         </div>
 
