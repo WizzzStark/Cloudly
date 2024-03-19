@@ -7,11 +7,11 @@ import {
 import { useQuery } from "convex/react";
 import { api } from "../../convex/_generated/api";
 
-import UploadButton from "./dashboard/files/uploadButton";
-import { FileCard } from "./file-card";
+import UploadButton from "./dashboard/_components/uploadButton";
+import { FileCard } from "./dashboard/_components/file-card";
 import Image from "next/image";
 import { FileIcon, Loader2, StarIcon } from "lucide-react";
-import { SearchBar } from "./dashboard/files/search-bar";
+import { SearchBar } from "./dashboard/_components/search-bar";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
