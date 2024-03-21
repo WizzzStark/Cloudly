@@ -14,7 +14,7 @@ import { Loader2 } from "lucide-react";
 import { SearchBar } from "./search-bar";
 import { useState } from "react";
 
-export default function FileBrowser({ title, favourites }: { title: string, favourites?: boolean}) {
+export default function FileBrowser({ title, filterFavourites }: { title: string, filterFavourites?: boolean}) {
   const organization = useOrganization();
   const user = useUser();
   const [query, setQuery] = useState("");
@@ -24,11 +24,20 @@ export default function FileBrowser({ title, favourites }: { title: string, favo
     orgId = organization.organization?.id ?? user.user?.id;
   }
 
-  const files = useQuery(api.files.getFiles, orgId ? { orgId, query, favourites } : "skip");
+  const favourites = useQuery(
+    api.files.getAllFavourites,
+    orgId ? { orgId } : "skip"
+  );
+
+  const files = useQuery(
+    api.files.getFiles, 
+    orgId ? { orgId, query, favourites:filterFavourites } : "skip"
+  );
+  
   const isLoading = files === undefined;
 
   return (
-    <div className="">
+    <div>
     
         {isLoading && 
           <div className="flex flex-col gap-8 w-full items-center mt-24">
@@ -47,14 +56,14 @@ export default function FileBrowser({ title, favourites }: { title: string, favo
             <SearchBar query={query} setQuery={setQuery}/>
 
             {files.length === 0 && (
-              <Placeholder />
+              <Placeholder filterFavourites />
             )}
           </>
           )
         }
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {files?.map((file) => {
-              return <FileCard key={file._id} file={file}/>
+              return <FileCard favourites={favourites ?? []}  key={file._id} file={file}/>
             })}
         </div>
       </div>
@@ -62,19 +71,36 @@ export default function FileBrowser({ title, favourites }: { title: string, favo
   );
 }
 
-function Placeholder() {
+function Placeholder({filterFavourites} : {filterFavourites?: boolean}) {
   return(
     <div className="flex flex-col gap-8 w-full items-center mt-24">
-      <Image 
-      alt="an image of files in a folder"
-      width="400"
-      height="400"
-      src="/empty.svg"
-      />
-      <div className="text-2xl">
-        You dont have any files yet. Upload some to get started.
-      </div>
-      <UploadButton />
+      {!filterFavourites ? (
+        <div>
+          <Image 
+          alt="an image of files in a folder"
+          width="400"
+          height="400"
+          src="/empty.svg"
+          />
+          <div className="text-2xl">
+            You dont have any files yet. Upload some to get started.
+          </div>
+          <UploadButton />
+        </div>
+      ) : (
+        <div>
+          <Image 
+          alt="an image of files in a folder"
+          width="600"
+          height="600"
+          src="/no_favourites.svg"
+          />
+          <div className="text-2xl font-semibold mt-10">
+            You haven't selected any favourites yet.
+          </div>
+        </div>
+      )}
+     
     </div> 
   )
 }
