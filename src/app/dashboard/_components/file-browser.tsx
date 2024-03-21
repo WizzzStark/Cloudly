@@ -14,7 +14,7 @@ import { Loader2 } from "lucide-react";
 import { SearchBar } from "./search-bar";
 import { useState } from "react";
 
-export default function FileBrowser({ title}: { title: string }) {
+export default function FileBrowser({ title, favourites }: { title: string, favourites?: boolean}) {
   const organization = useOrganization();
   const user = useUser();
   const [query, setQuery] = useState("");
@@ -24,7 +24,7 @@ export default function FileBrowser({ title}: { title: string }) {
     orgId = organization.organization?.id ?? user.user?.id;
   }
 
-  const files = useQuery(api.files.getFiles, orgId ? { orgId, query } : "skip");
+  const files = useQuery(api.files.getFiles, orgId ? { orgId, query, favourites } : "skip");
   const isLoading = files === undefined;
 
   return (
