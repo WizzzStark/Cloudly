@@ -31,7 +31,7 @@ async function hasAccessToOrg(
   }
 
   const hasAccess =
-    user.orgIds.includes(orgId) || user.tokenIdentifier.includes(orgId);
+    user.orgIds.some(item => item.orgId === orgId)|| user.tokenIdentifier.includes(orgId);
 
   if (!hasAccess) {
     return null;
@@ -71,6 +71,7 @@ export const getFiles = query({
     orgId: v.string(),
     query: v.optional(v.string()),
     favourites: v.optional(v.boolean()),
+    deletedOnly: v.optional(v.boolean()),
   },
   async handler(ctx, args) {
     const hasAccess = await hasAccessToOrg(
@@ -102,6 +103,12 @@ export const getFiles = query({
         files = files.filter((file) => favourites.some((favourite) => favourite.fileId === file._id));
       }
 
+      if(args.deletedOnly){
+        files = files.filter((file) => file.shouldDelete);
+      } else {
+        files = files.filter((file) => !file.shouldDelete);
+      }
+
       return files;
 
   },
@@ -118,7 +125,15 @@ export const deleteFile = mutation({
       throw new ConvexError("you do not have access to ths file");
     }
 
-    await ctx.db.delete(args.fileId);
+    const isAdmin = access.user.orgIds.find((item) => item.orgId === access.file.orgId && item.role === "org:admin");
+
+    if (!isAdmin){
+      throw new ConvexError("you must be an admin to delete a file");
+    }
+
+    await ctx.db.patch(args.fileId, {
+      shouldDelete: true,
+    });
 
   }
 });

@@ -2,14 +2,16 @@ import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
 
 export const fileTypes = v.union(v.literal("image"), v.literal("csv"), v.literal("pdf"))
+export const roles = v.union(v.literal("org:admin"), v.literal("org:member"))
 
 export default defineSchema({
   files: defineTable({ 
     name: v.string(), 
     type: fileTypes,
     fileId: v.id("_storage"), 
-    orgId: v.string() })
-    .index("by_orgId",["orgId"]),
+    orgId: v.string(),
+    shouldDelete: v.optional(v.boolean())
+   }).index("by_orgId",["orgId"]),
 
   favourites: defineTable({
       fileId: v.id("files"),
@@ -19,6 +21,9 @@ export default defineSchema({
 
   users: defineTable({
     tokenIdentifier: v.string(),
-    orgIds: v.array(v.string()),
+    orgIds: v.array(v.object({ 
+      orgId: v.string(), 
+      role: roles
+    })),
   }).index("by_tokenIdentifier", ["tokenIdentifier"]),
 });

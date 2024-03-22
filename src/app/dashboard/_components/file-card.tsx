@@ -35,6 +35,7 @@ import { ReactNode, useState } from "react"
 import { useMutation } from "convex/react"
 import { api } from "../../../../convex/_generated/api"
 import { useToast } from "@/components/ui/use-toast"
+import { Protect } from "@clerk/nextjs"
 
 
 function getFileUrl(fileId: Id<"_storage">): string {
@@ -55,8 +56,7 @@ function FileCardActions({ file, isFavourite }: { file: Doc<"files">, isFavourit
                 <AlertDialogHeader>
                 <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                 <AlertDialogDescription>
-                    This action cannot be undone. This will permanently delete your account
-                    and remove your data from our servers.
+                    Your file will be moved to the Trash and will be permanently deleted soon.
                 </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
@@ -70,7 +70,7 @@ function FileCardActions({ file, isFavourite }: { file: Doc<"files">, isFavourit
                         toast({
                             variant: "default",
                             title: "File deleted",
-                            description: "Your file is now gone from our servers.",
+                            description: "Your file is now in the trash marked for deletion.",
                           });
                 }}
                 >
@@ -100,14 +100,21 @@ function FileCardActions({ file, isFavourite }: { file: Doc<"files">, isFavourit
                     )}
                 
                 </DropdownMenuItem>
+                <Protect
+                    role="org:admin"
+                    fallback={
+                      <></>
+                    }
+                >
                 <DropdownMenuSeparator />
-                <DropdownMenuItem 
-                    className="flex gap-1 text-red-600 items-center cursor-pointer"
-                    onClick={() => setIsConfirmOpen(true)}
-                    >
-                    <TrashIcon size={16} />
-                    Delete
-                </DropdownMenuItem>
+                    <DropdownMenuItem 
+                        className="flex gap-1 text-red-600 items-center cursor-pointer"
+                        onClick={() => setIsConfirmOpen(true)}
+                        >
+                        <TrashIcon size={16} />
+                        Delete
+                    </DropdownMenuItem>
+                </Protect>
             </DropdownMenuContent>
         </DropdownMenu>
         </>
@@ -123,7 +130,7 @@ export function FileCard({ file, favourites }: { file: Doc<"files">, favourites:
       } as Record<Doc<"files">["type"], ReactNode>;
 
     
-    const isFavourite = favourites.some((favourite) => favourite.fileId === file._id);
+    const isFavourite = favourites?.some((favourite) => favourite.fileId === file._id);
     
 
     return (
