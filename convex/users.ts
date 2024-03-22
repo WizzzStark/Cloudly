@@ -1,5 +1,5 @@
 import { ConvexError, v } from "convex/values";
-import { MutationCtx, QueryCtx, internalMutation } from "./_generated/server";
+import { MutationCtx, QueryCtx, internalMutation, query } from "./_generated/server";
 import { roles } from "./schema";
 
 export async function getUser(
@@ -78,5 +78,16 @@ export const updateRoleInOrgUser = internalMutation({
     await ctx.db.patch(user._id, {
       orgIds: user.orgIds,
     });
+  },
+});
+
+export const getUserProfile = query({
+  args: { userId: v.id("users") },
+  async handler(ctx, args) {
+    const user = await ctx.db.get(args.userId);
+    return {
+      name: user?.name,
+      image: user?.image,
+    };
   },
 });
