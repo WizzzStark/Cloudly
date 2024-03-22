@@ -57,7 +57,7 @@ function FileCardActions({ file, isFavourite }: { file: Doc<"files">, isFavourit
                 <AlertDialogHeader>
                 <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                 <AlertDialogDescription>
-                    Your file will be moved to the Trash and will be permanently deleted soon.
+                    Your file will be moved to the Trash, we permanently remove the files every 12h.
                 </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
