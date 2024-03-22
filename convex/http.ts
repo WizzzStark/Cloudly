@@ -42,14 +42,23 @@ http.route({
         switch (result.type) {
           case "user.created":
             await ctx.runMutation(internal.users.createUser, {
-              tokenIdentifier: `${process.env.CLERK_HOSTNAME}|${result.data.id}`
+              tokenIdentifier: `https://neat-mako-91.clerk.accounts.dev|${result.data.id}`
             });
             break;
 
           case "organizationMembership.created":
             await ctx.runMutation(internal.users.addOrgIdToUser, {
               orgId: result.data.organization.id,
-              tokenIdentifier: `${process.env.CLERK_HOSTNAME}|${result.data.public_user_data.user_id}`
+              tokenIdentifier: `https://neat-mako-91.clerk.accounts.dev|${result.data.public_user_data.user_id}`,
+              role: result.data.role === "org:admin" ? "org:admin" : "org:member",
+            });
+            break;
+
+          case "organizationMembership.updated":
+            await ctx.runMutation(internal.users.updateRoleInOrgUser, {
+              orgId: result.data.organization.id,
+              tokenIdentifier: `https://neat-mako-91.clerk.accounts.dev|${result.data.public_user_data.user_id}`,
+              role: result.data.role === "org:admin" ? "org:admin" : "org:member",
             });
             break;
         }
