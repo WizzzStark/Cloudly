@@ -30,7 +30,7 @@ import {
 
 import { Doc, Id } from "../../../../convex/_generated/dataModel"
 import { Button } from "@/components/ui/button"
-import { FileTextIcon, GanttChartIcon, ImageIcon, MoreVertical, StarIcon, TrashIcon } from "lucide-react"
+import { FileTextIcon, GanttChartIcon, ImageIcon, MoreVertical, StarIcon, TrashIcon, UndoIcon } from "lucide-react"
 import { ReactNode, useState } from "react"
 import { useMutation } from "convex/react"
 import { api } from "../../../../convex/_generated/api"
@@ -46,6 +46,7 @@ function getFileUrl(fileId: Id<"_storage">): string {
 
 function FileCardActions({ file, isFavourite }: { file: Doc<"files">, isFavourite: boolean}){
     const deleteFile = useMutation(api.files.deleteFile);
+    const restoreFile = useMutation(api.files.restoreFile);
     const toggleFavourite = useMutation(api.files.toggleFavourite);
     const [isConfirmOpem, setIsConfirmOpen] = useState(false);
     const {toast} = useToast();
@@ -109,10 +110,23 @@ function FileCardActions({ file, isFavourite }: { file: Doc<"files">, isFavourit
                 <DropdownMenuSeparator />
                     <DropdownMenuItem 
                         className="flex gap-1 text-red-600 items-center cursor-pointer"
-                        onClick={() => setIsConfirmOpen(true)}
+                        onClick={() => {
+                            if (file.shouldDelete){
+                                restoreFile({
+                                    fileId: file._id,
+                                });
+                            }else{
+                                setIsConfirmOpen(true)
+                            }   
+                        }}
                         >
-                        <TrashIcon size={16} />
-                        Delete
+                            {file.shouldDelete ? 
+                            <div className="flex gap-1 text-green-500 items-center cursor-pointer">
+                                <UndoIcon size={16} />Restore
+                            </div> : 
+                            <div className="flex gap-1 text-red-600 items-center cursor-pointer">
+                                <TrashIcon size={16} /> Delete
+                            </div>}
                     </DropdownMenuItem>
                 </Protect>
             </DropdownMenuContent>
