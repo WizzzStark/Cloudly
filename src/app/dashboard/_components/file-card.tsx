@@ -56,8 +56,7 @@ function FileCardActions({ file, isFavourite }: { file: Doc<"files">, isFavourit
                 <AlertDialogHeader>
                 <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
                 <AlertDialogDescription>
-                    This action cannot be undone. This will permanently delete your account
-                    and remove your data from our servers.
+                    Your file will be moved to the Trash and will be permanently deleted soon.
                 </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
@@ -71,7 +70,7 @@ function FileCardActions({ file, isFavourite }: { file: Doc<"files">, isFavourit
                         toast({
                             variant: "default",
                             title: "File deleted",
-                            description: "Your file is now gone from our servers.",
+                            description: "Your file is now in the trash marked for deletion.",
                           });
                 }}
                 >
