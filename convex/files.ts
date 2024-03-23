@@ -71,6 +71,7 @@ export const getFiles = query({
   args: {
     orgId: v.string(),
     query: v.optional(v.string()),
+    type: v.optional(fileTypes),
     favourites: v.optional(v.boolean()),
     deletedOnly: v.optional(v.boolean()),
   },
@@ -108,6 +109,10 @@ export const getFiles = query({
         files = files.filter((file) => file.shouldDelete);
       } else {
         files = files.filter((file) => !file.shouldDelete);
+      }
+
+      if (args.type){
+        files = files.filter((file) => file.type === args.type);
       }
 
       return files;
