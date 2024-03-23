@@ -4,6 +4,7 @@ const nextConfig = {
         remotePatterns: [
             {
                 hostname: 'youthful-frog-508.convex.cloud',
+                hostname: 'youthful-frog-508.convex.site',
             }
         ],
     }

@@ -39,6 +39,7 @@ export function FileCardActions({ file, isFavourite }: { file: Doc<"files">, isF
     const toggleFavourite = useMutation(api.files.toggleFavourite);
     const [isConfirmOpem, setIsConfirmOpen] = useState(false);
     const {toast} = useToast();
+    const me = useQuery(api.users.getMe);
 
 
     return ( 
@@ -57,7 +58,7 @@ export function FileCardActions({ file, isFavourite }: { file: Doc<"files">, isF
                     onClick={async () => {
                         await deleteFile({
                             fileId: file._id,
-                        });
+                        })
 
                         toast({
                             variant: "default",
@@ -103,10 +104,12 @@ export function FileCardActions({ file, isFavourite }: { file: Doc<"files">, isF
                 
                 </DropdownMenuItem>
                 <Protect
-                    role="org:admin"
-                    fallback={
-                      <></>
-                    }
+                    condition={ (check) => {
+                        return check({
+                            role: "org:admin",
+                        }) || file.userId === me?._id;
+                    }}
+                    fallback={<></>}
                 >
                 <DropdownMenuSeparator />
                     <DropdownMenuItem 

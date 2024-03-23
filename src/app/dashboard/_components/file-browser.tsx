@@ -152,7 +152,7 @@ function Placeholder({filterFavourites} : {filterFavourites?: boolean}) {
           src="/no_favourites.svg"
           />
           <div className="text-2xl font-semibold mt-10">
-            You haven't selected any favourites yet.
+            You have not selected any favourites yet.
           </div>
         </div>
       )}

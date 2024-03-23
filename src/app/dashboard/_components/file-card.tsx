@@ -21,6 +21,7 @@ import { useQuery } from "convex/react"
 import { api } from "../../../../convex/_generated/api"
 import { formatRelative } from 'date-fns'
 import { FileCardActions, getFileUrl } from "./file_actions"
+import Image from "next/image"
 
 
 export function FileCard({ file }: { file: Doc<"files"> & {isFavorited: boolean}}){
@@ -49,7 +50,7 @@ export function FileCard({ file }: { file: Doc<"files"> & {isFavorited: boolean}
             <CardContent className="h-[200px] flex justify-center items-center">
                {
                 file.type === "image" &&
-                    <img 
+                    <Image
                         alt={file.name}
                         width="200"
                         height="100"
@@ -71,7 +72,6 @@ export function FileCard({ file }: { file: Doc<"files"> & {isFavorited: boolean}
                 <div className="text-xs text-gray-800 font-semibold">
                     Uploaded {formatRelative((new Date(file._creationTime)), new Date())}
                 </div>
-
             </CardFooter>
         </Card>
     )
