@@ -13,6 +13,8 @@ import Image from "next/image";
 import { Loader2 } from "lucide-react";
 import { SearchBar } from "./search-bar";
 import { useState } from "react";
+import { DataTable } from "./file-table";
+import { columns } from "./columns";
 
 export default function FileBrowser({ title, filterFavourites, deletedOnly }: { title: string, filterFavourites?: boolean, deletedOnly?: boolean}) {
   const organization = useOrganization();
@@ -36,6 +38,14 @@ export default function FileBrowser({ title, filterFavourites, deletedOnly }: { 
   
   const isLoading = files === undefined;
 
+  const modifiedFiles = 
+    files?.map((file) => ({
+      ...file,
+      isFavorited: (favourites ?? []).some(
+        (favourite) => favourite.fileId === file._id
+      ),
+  })) ?? [];
+
   return (
     <div>
     
@@ -58,12 +68,14 @@ export default function FileBrowser({ title, filterFavourites, deletedOnly }: { 
             {files.length === 0 && (
               <Placeholder filterFavourites />
             )}
+
+            <DataTable columns={columns} data={modifiedFiles} />
           </>
           )
         }
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {files?.map((file) => {
-              return <FileCard favourites={favourites ?? []}  key={file._id} file={file}/>
+          {modifiedFiles?.map((file) => {
+              return <FileCard key={file._id} file={file} />;
             })}
         </div>
       </div>
