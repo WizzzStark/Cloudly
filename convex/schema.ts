@@ -12,7 +12,7 @@ export default defineSchema({
     orgId: v.string(),
     userId: v.id("users"),
     shouldDelete: v.optional(v.boolean())
-   }).index("by_orgId",["orgId"]),
+   }).index("by_orgId",["orgId"]).index("by_shouldDelete",["shouldDelete"]),
 
   favourites: defineTable({
       fileId: v.id("files"),
