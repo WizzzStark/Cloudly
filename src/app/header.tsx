@@ -13,7 +13,7 @@ export function Header() {
     <div className="border-b py-4 bg-gray-50">
       <div className="items-center container mx-auto justify-between flex">
         <Link href="/" className="flex gap-2 items-center text-xl text-black font-semibold">
-          <Image src="/cloudly_brand.png" width={120} height={30} alt="cloudlt logo" />
+          <Image src="/cloudly_brand.png" width="120" height="120" alt="cloudlt logo" className="w-full h-full" />
         </Link>
 
         <div className="flex gap-2">
