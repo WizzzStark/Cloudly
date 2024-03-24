@@ -3,6 +3,7 @@ import "../globals.css";
 import { Button } from "@/components/ui/button";
 import { FileIcon, StarIcon } from "lucide-react";
 import { SideNav } from "./side-nav";
+import { Header } from "../header";
 
 
 // export const metadata: Metadata = {
@@ -16,6 +17,8 @@ export default function DasboardLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <>
+    <Header />
     <main className="container mx-auto pt-12">
 
       <div className="flex gap-8">
@@ -28,5 +31,6 @@ export default function DasboardLayout({
         
       </div>
     </main>
+    </>
   );
 }

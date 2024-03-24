@@ -127,23 +127,24 @@ export default function UploadButton() {
         form.reset();
         }}>
         <DialogTrigger asChild>
-        <Button
-            onClick={() => {
-            
-            }}
+        <Button 
+          className="shimmer inline-flex h-10 items-center justify-center rounded-md 
+                    border border-slate-800 bg-[linear-gradient(110deg,#0e122b,45%,#1e2631,55%,#0e122b)] 
+                    bg-[length:200%_100%] px-[23px] font-medium text-slate-100 transition-colors focus:outline-none 
+                    focus:ring-1 focus:ring-slate-400 focus:ring-offset-1 focus:ring-offset-slate-50"
         >
             Upload File
         </Button>
         </DialogTrigger>
         <DialogContent>
         <DialogHeader>
-            <DialogTitle className="mb-8">Upload your File</DialogTitle>
+            <DialogTitle className="mb-8 searchBarText">Upload your File</DialogTitle>
             <DialogDescription>
             <DialogDescription className="mb-4">
                 The uploaded file will be visible to all members of your organization.
             </DialogDescription>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 ">
                 <FormField
                     control={form.control}
                     name="title"
@@ -166,6 +167,7 @@ export default function UploadButton() {
                         <FormControl>
                         <Input 
                             type="file" {...fileRef} 
+                            className=""
                         />
                         </FormControl>
                         <FormMessage />
@@ -174,7 +176,7 @@ export default function UploadButton() {
                 />
                 <Button type="submit" disabled={form.formState.isSubmitting} className="flex gap-1">
                     {form.formState.isSubmitting &&
-                    <Loader2 className="w-6 h-6 animate-spin" />
+                    <Loader2 className="w-6 h-6 animate-spin searchBarText" />
                     }
                     Submit
                 </Button>

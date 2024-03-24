@@ -36,10 +36,12 @@
     --ring: 222.2 84% 4.9%;
  
     --radius: 0.5rem;
+
+
   }
  
   .dark {
-    --background: 222.2 84% 4.9%;
+    --background: 221, 39%, 11%;
     --foreground: 210 40% 98%;
  
     --card: 222.2 84% 4.9%;
@@ -66,14 +68,211 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
+
+
   }
-}
- 
-@layer base {
-  * {
-    @apply border-border;
+  
+  @keyframes swing {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-100px);
+    }
   }
-  body {
-    @apply bg-background text-foreground;
+
+  @keyframes shimmer {
+    from {
+      background-position: 0 0;
+    }
+    to {
+      background-position: -200% 0;
+    }
   }
+
+  .specialh1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: #1F2937;
+    padding-bottom: 1rem;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-weight: 700;
+    font-size: 3.7rem;
+    line-height: 1.2;
+  }
+
+  p {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    color: #1F2937;
+  }
+  
+  .shimmer {
+    animation: shimmer 2s linear infinite;
+  }
+  
+
+  .one {
+      animation: swing 8s ease-in-out infinite;
+      width: 960px;
+      height: 6rem;  
+      top: 3rem;
+      position: absolute;
+  }
+
+  .one::before{
+    content: " ";
+    rotate: -42deg;
+    inset: 0px;
+    position: absolute;
+    background-image: linear-gradient(to bottom, #4f46e5, rgb(79 70 229 / 0))
+  }
+
+  .two {
+    animation: swing 15s ease-in-out infinite;
+    width: 960px;
+    height: 6rem;  
+    top: -3rem;
+    left: -7rem;
+    position: absolute;
+  }
+
+  .two::before{
+    content: " ";
+    rotate: -42deg;
+    inset: 0px;
+    position: absolute;
+    background-image: linear-gradient(to bottom, #818cf8, rgb(129 140 248 / 0))
+  }
+
+  .three {
+    animation: swing 7s -2s ease-in-out infinite;
+    width: 960px;
+    height: 4rem;  
+    top: 9rem;
+    left: 20rem;
+    position: absolute;
+  }
+
+  .three::before{
+    content: " ";
+    rotate: -42deg;
+    inset: 0px;
+    position: absolute;
+    background-image: linear-gradient(to bottom, #818cf8, rgb(129 140 248 / 0))
+  }
+
+  .four {
+    animation: swing 10s ease-in-out infinite;
+    width: 960px;
+    height: 16rem;  
+    top: 820px;
+    left: 11rem;
+    position: absolute;
+  }
+
+  .four::before{
+    content: " ";
+    rotate: -42deg;
+    inset: 0px;
+    position: absolute;
+    background-image: linear-gradient(to bottom, #717ffd, rgb(129 140 248 / 0));
+    opacity: 0.5;
+  }
+
+  .five {
+    animation: swing 15s -2s ease-in-out infinite;
+    width: 480px;
+    height: 3rem;  
+    top: 970px;
+    left: 550px;
+    position: absolute;
+  }
+
+  .five::before{
+    content: " ";
+    rotate: -42deg;
+    inset: 0px;
+    position: absolute;
+    background-image: linear-gradient(to bottom, #1e1b4b, rgb(30 25 75 / 0))
+  }
+
+  .six {
+    animation: swing 9s -3s ease-in-out infinite;
+    width: 960px;
+    height: 4rem;  
+    top: 820px;
+    left: 6rem;
+    position: absolute;
+  }
+
+  .six::before{
+    content: " ";
+    rotate: -42deg;
+    inset: 0px;
+    position: absolute;
+    background-image: linear-gradient(to bottom, #312e81, rgb(49 46 129 / 0))
+  }
+
+  .lineLeftOne {
+    border-color: aliceblue;
+    border-left-width: 1px;
+    bottom: 0px;
+    top: 0px;
+    position: absolute;
+    border-image: linear-gradient(to bottom, rgb(165 180 252 / .4), transparent) 1;
+  }
+
+  .lineLeftTwo {
+    border-color: aliceblue;
+    border-left-width: 1px;
+    bottom: 0px;
+    top: 0px;
+    left: 80px;
+    position: absolute;
+    border-image: linear-gradient(to bottom, rgb(165 180 252 / .4), transparent) 1;
+  }
+
+  .lineRightOne {
+    border-left-width: 1px;
+    bottom: 0px;
+    top: 0px;
+    right: 0px;
+    position: absolute;
+    border-image: linear-gradient(to bottom, rgb(165 180 252 / .4), transparent) 1;
+  }
+
+  .lineRightTwo {
+    border-left-width: 1px;
+    bottom: 0px;
+    top: 0px;
+    right: 80px;
+    position: absolute;
+    border-image: linear-gradient(to bottom, rgb(165 180 252 / .4), transparent) 1;
+  }
+
+  .horizontalLine {
+    border-bottom-width: 1px;
+    border-image: linear-gradient(to bottom, rgb(165 180 252 / .4), transparent) 1;
+  }
+
+  .content-container {
+    min-width: 768px;
+    padding-bottom: 5rem;
+    padding-top: 11rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 30;
+  }
+  
+  .text-container {
+    min-width: 640px;
+    padding: 0 1.5rem;
+    max-width: 48rem;
+    margin-bottom: 3rem;
+    text-align: center;
+  }
+
 }

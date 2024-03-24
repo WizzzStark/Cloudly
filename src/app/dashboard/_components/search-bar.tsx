@@ -40,7 +40,7 @@ export function SearchBar({query, setQuery}: {query: string, setQuery: Dispatch<
                         control={form.control}
                         name="query"
                         render={({ field }) => (
-                        <FormItem className="w-full">
+                        <FormItem className="w-full searchBarText">
                             <FormControl>
                             <Input placeholder="Search for a file name" {...field} />
                             </FormControl>
@@ -51,7 +51,7 @@ export function SearchBar({query, setQuery}: {query: string, setQuery: Dispatch<
                     <Button 
                         type="submit" 
                         disabled={form.formState.isSubmitting} 
-                        className="flex gap-1"
+                        className="flex gap-1 px-6"
                     >
                         {form.formState.isSubmitting &&
                         <Loader2 className="w-6 h-6 animate-spin" />

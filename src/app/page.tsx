@@ -1,99 +1,89 @@
-"use client";
+'use client';
 
+import { SignedIn } from "@clerk/clerk-react";
 import {
-  useOrganization,
-  useUser,
-} from "@clerk/nextjs";
-import { useQuery } from "convex/react";
-import { api } from "../../convex/_generated/api";
+    SignInButton,
+    SignedOut,
+  } from "@clerk/nextjs";
 
-import UploadButton from "./dashboard/_components/uploadButton";
-import { FileCard } from "./dashboard/_components/file-card";
-import Image from "next/image";
-import { FileIcon, Loader2, StarIcon } from "lucide-react";
-import { SearchBar } from "./dashboard/_components/search-bar";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import { useUser } from '@clerk/nextjs';
 
-export default function Home() {
-  const organization = useOrganization();
-  const user = useUser();
-  const [query, setQuery] = useState("");
+export default function LandingComponent() {
 
-  let orgId: string | undefined = undefined;
-  if (organization.isLoaded && user.isLoaded) {
-    orgId = organization.organization?.id ?? user.user?.id;
-  }
+    const { isSignedIn } = useUser();
 
-  const files = useQuery(api.files.getFiles, orgId ? { orgId, query } : "skip");
-  const isLoading = files === undefined;
+    return (
+        <div className=' bg-[#e0e7ff]'>
+            <div className='overflow-clip flex flex-col relative min-h-[100vh]'>
+                <div className="blur-[64px] translate-x-[-50%] w-[1102px] z-10 left-[50%] top-0 bottom-0 absolute">
+                    <div className="one" />
+                    <div className="two" />
+                    <div className="three" />
+                    <div className="four" />
+                    <div className="five" />
+                    <div className="six" />
+                </div>
 
-  return (
-    <main className="container mx-auto pt-12">
+                <div className=' translate-x-[-50%] w-[1102px] z-10 left-[50%] top-0 bottom-0 absolute pointer-events-none'>
+                    <div className='lineLeftOne'/>
+                    <div className='lineLeftTwo'/>
+                    <div className='lineRightOne'/>
+                    <div className='lineRightTwo'/>
+                </div>
 
-      <div className="flex gap-8">
-        <div className="w-40 flex-col gap-4">
-          <Link href="/dashboard/files">
-            <Button variant={"link"} className="flex gap-2">
-              <FileIcon /> All Files
-            </Button>
-          </Link>
+                <header className='z-50 border-[#D1DAFF] absolute w-full border-b-[1px] top-[1.5rem] pb-[1.5rem]'>
+                    <div className='min-w-[640px] pl-[1.5rem] pr-[1.5rem]'>
+                        <div className='max-w-[48rem] mx-auto'>
+                            <div className='z-20 bg-[#CFD4FA] px-[0.60rem] rounded-[md] justify-between items-center h-[4rem] flex relative'>
+                                <div className='bg-[#F8F9FF] w-full px-[0.75rem] rounded-[0.5rem] justify-between items-center h-[3rem] flex relative'>
+                                    <nav className='mx-auto'>
+                                        <ul className='flex gap-[2rem]'>
+                                            <li>
+                                                <a href='#' className='text-[#2A3441] hover:bg-gray-500 hover:bg-opacity-15 rounded-lg py-[7px] px-3 transition-colors duration-150 font-semibold'>Updates</a>
+                                            </li>
+                                            <li>
+                                                <a href='#' className='text-[#2A3441] hover:bg-gray-500 hover:bg-opacity-15 rounded-lg py-[7px] px-3 transition-colors duration-150 font-semibold'>FAQ</a>
+                                            </li>
+                                            <li>
+                                                <a href='#' className='text-[#2A3441] hover:bg-gray-500 hover:bg-opacity-15 rounded-lg py-[7px] px-3 transition-colors duration-150 font-semibold'>Contact us</a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
 
-          <Link href="/dashboard/favourites">
-            <Button variant={"link"} className="flex gap-2">
-              <StarIcon /> Favourites
-            </Button>
-          </Link>
-        </div>
+                <section className="content-container">
+                    <div className="text-container">
+                        <h1 className='specialh1'>
+                            The best file drive service you can find
+                        </h1>
+                        <p className=' font-semibold text-black/70 mt-3 mb-[30px]'>
+                            Store, share and access all of your files from anywhere in the world with organization support. 
+                        </p>
+                        <SignedOut>
+                            <SignInButton>
+                                <button className="shimmer mt-5 inline-flex h-12 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-200 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+                                    Get Started
+                                </button>
+                            </SignInButton>
+                        </SignedOut>
 
-        <div className="w-full">
-          {isLoading && 
-            <div className="flex flex-col gap-8 w-full items-center mt-24">
-              <Loader2 className="w-32 h-32 animate-spin text-gray-500" />
-              <p className="text-2xl text-gray-500"> Loading your images ...</p>
+                        <SignedIn>
+                            <a href="/dashboard/files" className="shimmer mt-5 inline-flex h-12 animate-shimmer items-center justify-center rounded-md border border-slate-800 bg-[linear-gradient(110deg,#000103,45%,#1e2631,55%,#000103)] bg-[length:200%_100%] px-6 font-medium text-slate-200 transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+                                    Go to Cloudly main page
+                            </a>
+                        </SignedIn>
+        
+                    </div>
+                </section>
+
+                <div className="border-[#D1DAFF] absolute w-full border-b-[1px] top-[400px] pb-[1.5rem]"/>
+                <div className="border-[#D1DAFF] absolute w-full border-b-[1px] top-[510px] pb-[1.5rem]"/>
+
             </div>
-          }
-
-
-          {!isLoading && (
-            <>
-              <div className="flex justify-between mb-8">
-                <h1 className="text-4xl font-bold">Your Files</h1>
-                <UploadButton />
-              </div>
-              <SearchBar query={query} setQuery={setQuery}/>
-
-              {files.length === 0 && (
-                <Placeholder />
-              )}
-            </>
-            )
-          }
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {files?.map((file) => {
-                return <FileCard key={file._id} file={file}/>
-              })}
-          </div>
         </div>
-      </div>
-    </main>
-  );
-}
-
-function Placeholder() {
-  return(
-    <div className="flex flex-col gap-8 w-full items-center mt-24">
-      <Image 
-      alt="an image of files in a folder"
-      width="400"
-      height="400"
-      src="/empty.svg"
-      />
-      <div className="text-2xl">
-        You dont have any files yet. Upload some to get started.
-      </div>
-      <UploadButton />
-    </div> 
-  )
-}
+    );
+};
