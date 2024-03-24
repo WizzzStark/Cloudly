@@ -28,8 +28,6 @@ Welcome to Cloudly, the ultimate cloud storage solution designed to cater to you
 
 ### Prerequisites
 
-### Prerequisites
-
 Before you begin, ensure you have the following installed:
 - Node.js 
 - npm
