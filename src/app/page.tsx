@@ -6,11 +6,8 @@ import {
     SignedOut,
   } from "@clerk/nextjs";
 
-import { useUser } from '@clerk/nextjs';
 
 export default function LandingComponent() {
-
-    const { isSignedIn } = useUser();
 
     return (
         <div className=' bg-[#e0e7ff]'>
@@ -31,21 +28,21 @@ export default function LandingComponent() {
                     <div className='lineRightTwo'/>
                 </div>
 
-                <header className='z-50 border-[#D1DAFF] absolute w-full border-b-[1px] top-[1.5rem] pb-[1.5rem]'>
-                    <div className='min-w-[640px] pl-[1.5rem] pr-[1.5rem]'>
-                        <div className='max-w-[48rem] mx-auto'>
-                            <div className='z-20 bg-[#CFD4FA] px-[0.60rem] rounded-[md] justify-between items-center h-[4rem] flex relative'>
+                <header className='z-50 border-[#D1DAFF] absolute w-full border-b-[1px] top-[1.5rem] pb-[1.5rem] lg:top-0 lg:pb-0'>
+                    <div className='px-[1.5rem] w-full'>
+                        <div className='mx-auto max-w-[48rem]'>
+                            <div className='z-20 bg-[#CFD4FA] px-[0.60rem] rounded-md justify-between items-center h-[4rem] flex relative'>
                                 <div className='bg-[#F8F9FF] w-full px-[0.75rem] rounded-[0.5rem] justify-between items-center h-[3rem] flex relative'>
                                     <nav className='mx-auto'>
-                                        <ul className='flex gap-[2rem]'>
+                                        <ul className='flex gap-[1rem] lg:gap-[2rem]'>
                                             <li>
-                                                <a href='#' className='text-[#2A3441] hover:bg-gray-500 hover:bg-opacity-15 rounded-lg py-[7px] px-3 transition-colors duration-150 font-semibold'>Updates</a>
+                                                <a href='#' className='text-[#2A3441] hover:bg-gray-500 hover:bg-opacity-15 rounded-lg py-[7px] px-2 lg:px-3 transition-colors duration-150 font-semibold'>Updates</a>
                                             </li>
                                             <li>
-                                                <a href='#' className='text-[#2A3441] hover:bg-gray-500 hover:bg-opacity-15 rounded-lg py-[7px] px-3 transition-colors duration-150 font-semibold'>FAQ</a>
+                                                <a href='#' className='text-[#2A3441] hover:bg-gray-500 hover:bg-opacity-15 rounded-lg py-[7px] px-2 lg:px-3 transition-colors duration-150 font-semibold'>FAQ</a>
                                             </li>
                                             <li>
-                                                <a href='#' className='text-[#2A3441] hover:bg-gray-500 hover:bg-opacity-15 rounded-lg py-[7px] px-3 transition-colors duration-150 font-semibold'>Contact us</a>
+                                                <a href='#' className='text-[#2A3441] hover:bg-gray-500 hover:bg-opacity-15 rounded-lg py-[7px] px-2 lg:px-3 transition-colors duration-150 font-semibold'>Contact us</a>
                                             </li>
                                         </ul>
                                     </nav>
@@ -57,7 +54,7 @@ export default function LandingComponent() {
 
                 <section className="content-container">
                     <div className="text-container">
-                        <h1 className='specialh1'>
+                        <h1 className='specialh1 text-center md:text-[4rem] text-[2rem]'>
                             The best file drive service you can find
                         </h1>
                         <p className=' font-semibold text-black/70 mt-3 mb-[30px]'>
