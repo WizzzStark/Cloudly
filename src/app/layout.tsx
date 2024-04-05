@@ -9,6 +9,9 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Cloudly",
   description: "Cloudly is a file drive service that allows you to store and share files with ease.",
+  icons: {
+    icon: "/Cloudly_logo.png",
+  },
 };
 
 export default function RootLayout({
